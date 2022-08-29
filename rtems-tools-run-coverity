@@ -18,10 +18,13 @@
 #   + better instructions on setup. Where to download, etc.
 #
 
-COVERITY_VERSION=cov-analysis-linux64-2020.09
 COVERITY_BASE=${HOME}/coverity
-COVERITY=${COVERITY_BASE}/${COVERITY_VERSION}
-RTEMS_TOOLS=/home/joel/rtems-cron-coveritu/tools/6/
+
+# Be careful -- the tar and the directory do not always match
+COVERITY_VERSION=cov-analysis-linux64-2022.06
+COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2022.6.0
+
+RTEMS_TOOLS=${HOME}/rtems-cron-coverity/tools/6/
 
 COVERITY_SCAN_TOKEN=zhfOCWF5jpcB-sGffpvKaQ
 RESULTS_DIR=cov-int
@@ -57,8 +60,8 @@ check_fatal $? "For now, Coverity must be run by joel"
 cd ${COVERITY_BASE}
 check_fatal $? "Could not cd ${COVERITY_BASE}"
 
-rm -rf ${COVERITY_VERSION}
-check_fatal $? "Could not remove ${COVERITY_VERSION}"
+rm -rf ${COVERITY}
+check_fatal $? "Could not remove ${COVERITY}"
 
 tar xf ${COVERITY_VERSION}.tar.gz
 check_fatal $? "Could not untar ${COVERITY_VERSION} tarball"
@@ -84,7 +87,6 @@ check_fatal $? "Could not cd to rtems-tools directory for waf build"
 
 # remove results of last analysis
 rm -rf ${RESULTS_DIR} ${RESULTS_ARCHIVE}
-
 # clean up the RTEMS build
 ./waf distclean
 check_fatal $? "Could not run waf distclean"
