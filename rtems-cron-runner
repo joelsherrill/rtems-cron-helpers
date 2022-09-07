@@ -405,7 +405,6 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
       test_single_bsp aarch64 a53_lp64_qemu
       test_single_bsp aarch64 a72_ilp32_qemu
       test_single_bsp aarch64 a72_lp64_qemu
-      test_single_bsp aarch64 xilinx_versal_ilp32_qemu
       test_single_bsp aarch64 xilinx_versal_lp64_qemu
       test_single_bsp aarch64 xilinx_zynqmp_ilp32_qemu
       test_single_bsp aarch64 xilinx_zynqmp_lp64_qemu
