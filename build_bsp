@@ -9,9 +9,10 @@ progname=${0##*/}        # fast basename hack for ksh, bash
 USAGE=\
 "usage: $progname [ -opts ] arch bsp
   -v               verbose (default=no)
-  -R               RTEMS directory (default=rtems)
-  -T               Top of working directory (default=${HOME}/rtems-work)
-  -V               version (default=5)
+  -R dir           RTEMS directory (default=rtems)
+  -T dir           Top of working directory (default=${HOME}/rtems-work)
+  -B dir           BSP install directory (for default, see below)
+  -V n             version (default=5)
   -C               clean when build is successful (default=yes)
   -a               use autoconf build system (default=yes)
   -w               use waf build system (default=no)
@@ -92,10 +93,11 @@ RTEMSDIR=${RTEMSDIR:-rtems}
 TOP=${TOP:-${HOME}/rtems-work}
 
 # Now parse the command line arguments
-while getopts "vR:T:V:j:aAcCrmMnpstDPS:we:f:" OPT
+while getopts "vB:R:T:V:j:aAcCrmMnpstDPS:we:f:" OPT
 do
  case "$OPT" in
    T) TOP=${OPTARG} ;;
+   B) BSP_INSTALL=${OPTARG} ;;
    R) RTEMSDIR=${OPTARG} ;;
    V) RTEMS_VERSION=${OPTARG} ;;
    v) verbose="yes";;
@@ -204,6 +206,7 @@ fi
 if [ ${verbose} = "yes" ] ; then
   echo "Top Directory:      " ${TOP}
   echo "RTEMS Directory:    " ${RTEMSDIR}
+  echo "BSP Install:        " ${BSP_INSTALL}
   echo "RTEMS Version:      " ${RTEMS_VERSION}
   echo "RTEMS GCC:          " `type ${CPU}-rtems${RTEMS_VERSION}-gcc  | cut -d' ' -f3`
   echo "RTEMS Debug Arg :   " ${ENABLE_DEBUG}
