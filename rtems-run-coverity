@@ -133,7 +133,7 @@ if [ -r rtems/waf ] ; then
   ./waf distclean
   check_fatal $? "Could not run waf distclean"
 
-  ./waf bsp_defaults --rtems-bsps=${RTEMS_CPU}/${RTEMS_BSP} | \
+  ./waf bspdefaults --rtems-bsps=${RTEMS_CPU}/${RTEMS_BSP} | \
     sed -e 's/^RTEMS_NETWORKING =.*$/RTEMS_NETWORKING = False/' \
         -e 's/^RTEMS_POSIX_API =.*$/RTEMS_POSIX_API = True/' \
         -e 's/^RTEMS_DEBUG =.*$/RTEMS_DEBUG = False/' \
@@ -146,7 +146,7 @@ if [ -r rtems/waf ] ; then
         -e 's/^BUILD_TESTS =.*$/BUILD_TESTS = False/' \
         -e 's/^BUILD_SAMPLES =.*$/BUILD_SAMPLES = False/' \
     >config.ini
-  check_fatal $? "Could not run waf bsp_defaults"
+  check_fatal $? "Could not run waf bspdefaults"
 
     #--rtems-tools=${HOME}/test-gcc/install-gcc9
 

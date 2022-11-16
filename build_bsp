@@ -375,7 +375,7 @@ if [ ${do_waf} = "yes" ] ; then
   ./waf distclean
   check_status $? "Unable to waf distclean ${RTEMSDIR}"
 
-  ./waf bsp_defaults --rtems-bsps=${CPU}/${BUILD_BSP} | \
+  ./waf bspdefaults --rtems-bsps=${CPU}/${BUILD_BSP} | \
      sed -e "s/^__RTEMS_MAJOR__ =.*$/__RTEMS_MAJOR__ = ${RTEMS_VERSION}/" \
          -e "s/^RTEMS_NETWORKING =.*$/RTEMS_NETWORKING = ${LEGACY_NET_WAF}/" \
          -e "s/^RTEMS_POSIX_API =.*$/RTEMS_POSIX_API = ${POSIX_API_WAF}/" \
