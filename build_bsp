@@ -389,8 +389,17 @@ if [ ${do_waf} = "yes" ] ; then
          -e "s/^RTEMS_NETWORKING =.*$/RTEMS_NETWORKING = ${LEGACY_NET_WAF}/" \
          -e "s/^RTEMS_POSIX_API =.*$/RTEMS_POSIX_API = ${POSIX_API_WAF}/" \
          -e "s/^BUILD_TESTS =.*$/BUILD_TESTS = ${TESTS_ALL_WAF}/" \
-         -e "s/^BUILD_SAMPLES =.*$/BUILD_SAMPLES = ${TESTS_SAMPLES_WAF}/" \
-     >config-${CPU}-${BUILD_BSP}.ini
+         -e "s/^BUILD_SAMPLES =.*$/BUILD_SAMPLES = ${TESTS_SAMPLES_WAF}/" | \
+     case ${BSP} in
+       rv*spike) 
+         sed \
+          -e "s/^RISCV_ENABLE_HTIF_SUPPORT =.*$/RISCV_ENABLE_HTIF_SUPPORT = True/" \
+          -e "s/^RISCV_CONSOLE_MAX_NS16550_DEVICES =.*$/RISCV_CONSOLE_MAX_NS16550_DEVICES = 0/"
+         ;;
+       *)
+         cat
+         ;;
+     esac >config-${CPU}-${BUILD_BSP}.ini
    check_status $? "generating config-${CPU}-${BUILD_BSP}.ini FAILED"
 
   ./waf configure \
@@ -452,7 +461,7 @@ if [ ${do_run} = "yes" -a ${status} -eq 0 ] ; then
       --rtems-tools=${RTEMS_TOOLS_DIR} \
       --rtems-bsp=${TESTER_BSP} \
       --log=run-${TESTER_BSP}.log \
-      ${MAILARGS} .
+      ${MAILARGS} . </dev/null
     status=$?
   fi
 fi
