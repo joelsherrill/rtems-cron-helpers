@@ -315,7 +315,7 @@ BB_ARGS="-T ${TOP} -v -r ${MAIL_ARG} -t"
 test_single_bsp()
 {
   if [ ${1} = "smp" ] ; then
-    SMP_ARGS="-S"
+    SMP_ARGS="-s"
     SMP="SMP"
     shift
   else
