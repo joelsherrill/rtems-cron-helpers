@@ -461,7 +461,7 @@ if [ ${do_run} = "yes" -a ${status} -eq 0 ] ; then
       --rtems-tools=${RTEMS_TOOLS_DIR} \
       --rtems-bsp=${TESTER_BSP} \
       --log=run-${TESTER_BSP}.log \
-      ${MAILARGS} . </dev/null
+      ${MAILARGS} b-${BSP} </dev/null
     status=$?
   fi
 fi
