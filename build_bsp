@@ -457,11 +457,16 @@ if [ ${do_run} = "yes" -a ${status} -eq 0 ] ; then
       esac
     fi
     echo "*** "`pwd`
+    if [ ${do_autoconf} = "yes" ] ; then
+      TESTDIR=. 
+    else
+      TESTDIR=b-${BUILD_BSP} 
+    fi
     time rtems-test \
       --rtems-tools=${RTEMS_TOOLS_DIR} \
       --rtems-bsp=${TESTER_BSP} \
       --log=run-${TESTER_BSP}.log \
-      ${MAILARGS} b-${BSP} </dev/null
+      ${MAILARGS} ${TESTDIR} </dev/null
     status=$?
   fi
 fi
