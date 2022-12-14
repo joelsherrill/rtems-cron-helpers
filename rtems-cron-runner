@@ -334,11 +334,13 @@ test_single_bsp()
   # Has waf, prefer it
   if [ -r ${TOP}/rtems/waf ] ; then
     # (NO DEBUG) Is this an RTEMS version with a waf , then build that way
-    ${exedir}/build_bsp -w -V ${version} -T ${TOP} ${BB_ARGS} ${SMP_ARGS}    ${cpu} ${bsp}
+    ${exedir}/build_bsp -w -V ${version} -T ${TOP} ${BB_ARGS} \
+       ${SMP_ARGS} ${cpu} ${bsp}
     LOG ${?} "waf build of ${cpu} ${bsp} (${SMP}/NODEBUG)"
 
     # (DEBUG) Is this an RTEMS version with a waf , then build that way
-    ${exedir}/build_bsp -w -V ${version} ${BB_ARGS} ${SMP_ARGS} -D ${cpu} ${bsp}
+    ${exedir}/build_bsp -w -V ${version} -T ${TOP} ${BB_ARGS} \
+       ${SMP_ARGS} -D ${cpu} ${bsp}
     results=$?
     LOG ${results} "waf build of ${cpu} ${bsp} (${SMP}/DEBUG)"
     if [ $? -eq 0 ] ; then
