@@ -325,6 +325,9 @@ esac
 BUILD_BSP=${BSP}
 case ${BSP} in
   a53_ilp32_qemu|a53_lp64_qemu) ableToRun=yes ;;
+  xilinx_zynqmp_ilp32_qemu) ableToRun=yes ;;
+  xilinx_zynqmp_lp64_qemu)  ableToRun=yes ;;
+  xilinx_versal_lp64_qemu)  ableToRun=yes ;;
   arm1136jfs|arm1136js|arm7tdmi|arm920|armcortexa9) ableToRun=yes ;;
   xilinx_zynq_a9_qemu)     ableToRun=yes ;;
   realview_pbx_a9_qemu)    ableToRun=yes ;;
