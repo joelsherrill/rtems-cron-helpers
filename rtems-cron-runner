@@ -381,10 +381,9 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
     type spike >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
       for bsp in rv32iac_spike rv32imac_spike rv32imafc_spike \
-	  rv32imafdc_spike rv32imafd_spike rv32im_spike rv32i_spike \
-	  rv64imac_medany_spike rv64imac_spike rv64imafdc_medany_spike \
-	  rv64imafdc_spike rv64imafd_medany rv64imafd_medany_spike \
-	  rv64imafd_spike
+          rv32i rv32imafdc rv64imafd rv64imafdc \
+          rv32imafdc_spike rv32imafd_spike rv32im_spike rv32i_spike \
+	  rv64imac_spike rv64imafd_spike rv64imafdc_spike
       do 
 	test_single_bsp riscv ${bsp}
       done
