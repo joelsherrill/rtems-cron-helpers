@@ -348,11 +348,8 @@ case ${BSP} in
   rv32imafd_spike)         ableToRun=yes ; BUILD_BSP=rv32imafd ;;
   rv32im_spike)            ableToRun=yes ; BUILD_BSP=rv32im ;;
   rv32i_spike)             ableToRun=yes ; BUILD_BSP=rv32i ;;
-  rv64imac_medany_spike)   ableToRun=yes ; BUILD_BSP=rv64imac_medany ;;
   rv64imac_spike)          ableToRun=yes ; BUILD_BSP=rv64imac ;;
-  rv64imafdc_medany_spike) ableToRun=yes ; BUILD_BSP=rv64imafdc_medany ;;
   rv64imafdc_spike)        ableToRun=yes ; BUILD_BSP=rv64imafdc ;;
-  rv64imafd_medany_spike)  ableToRun=yes ; BUILD_BSP=rv64imafd_medany ;;
   rv64imafd_spike)         ableToRun=yes ; BUILD_BSP=rv64imafd ;;
   generic_or1k)            ableToRun=yes ;;
   simsh*)                  ableToRun=yes ;;
