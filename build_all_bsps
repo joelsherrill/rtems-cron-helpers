@@ -149,11 +149,8 @@ do
     riscv/rv32imafd) has_smp="yes" ;;
     riscv/rv32imafdc) has_smp="yes" ;;
     riscv/rv64imac) has_smp="yes" ;;
-    riscv/rv64imac_medany) has_smp="yes" ;;
     riscv/rv64imafd) has_smp="yes" ;;
     riscv/rv64imafdc) has_smp="yes" ;;
-    riscv/rv64imafdc_medany) has_smp="yes" ;;
-    riscv/rv64imafd_medany) has_smp="yes" ;;
     sparc/erc32) has_smp="yes" ;;
     sparc/gr712rc) has_smp="yes" ;;
     sparc/gr740) has_smp="yes" ;;
