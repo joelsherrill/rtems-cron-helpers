@@ -319,6 +319,7 @@ test_single_bsp()
     SMP="SMP"
     shift
   else
+    SMP_ARGS=""
     SMP="NOSMP"
   fi
 
