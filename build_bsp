@@ -356,6 +356,7 @@ case ${BSP} in
   erc32|erc32-sis)         ableToRun=yes ; BSP=erc32-sis; BUILD_BSP=erc32 ;;
   leon2|leon2-sis)         ableToRun=yes ; BSP=leon2-sis; BUILD_BSP=leon2 ;;
   leon3|leon3-sis)         ableToRun=yes ; BSP=leon3-sis; BUILD_BSP=leon3 ;;
+  leon3|leon3-qemu)        ableToRun=yes ; BSP=leon3-qemu; BUILD_BSP=leon3 ;;
   sis|erc32|leon2|leon3)   ableToRun=yes ;;
   v850*)                   ableToRun=yes ;;
   *)                       ableToRun=no ;;
@@ -462,7 +463,8 @@ if [ ${do_run} = "yes" -a ${status} -eq 0 ] ; then
     else
       TESTDIR=b-${BUILD_BSP} 
     fi
-    time rtems-test \
+    time LD_LIBRARY_PATH=${RTEMS_TOOLS_DIR}/lib64 \
+      rtems-test \
       --rtems-tools=${RTEMS_TOOLS_DIR} \
       --rtems-bsp=${TESTER_BSP} \
       --log=run-${TESTER_BSP}.log \
