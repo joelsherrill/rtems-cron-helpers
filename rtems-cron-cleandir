@@ -1,0 +1,122 @@
+#! /bin/sh
+#
+#  Example invocation for a 5.x release snapshot
+#   ~/rtems-cron-helpers/rtems-cron-cleandir \
+#    -D ${HOME}/rtems-cron-5.0.0-m2005-1 \
+
+USAGE=\
+"usage: $progname [ -opts ]
+  -d               do deep clean (default=no)
+  -D DIRECTORY     top Directory (default=NOT_SET)
+  -u               report disk usage before and after (default=no)
+  -v               verbose (default=no)
+
+Normal clean removes build artifacts.
+Deep clean removes tools, sources, and patches.
+"
+
+#   log an error to stderr
+prerr()
+{
+    echo "$*" >&2
+}
+
+fatal() {
+    [ "$1" ] && prerr $*
+    prerr "$USAGE"
+    exit 1
+}
+
+warn() {
+    [ "$1" ] && prerr $*
+}
+
+check_status()
+{
+  if [ $1 -ne 0 ] ; then
+    shift 
+    echo "FAILED: " "$*" >&2
+    exit 1
+  fi
+}
+
+# directory where run from
+exedir=`dirname "$0"`
+exedir=`( cd "${exedir}" && pwd )`
+
+# Default Behavioral variables to set
+verbose="no"
+TOP=NOT_SET
+do_du="no"
+do_deep_clean="no"
+
+while getopts "dD:uv" OPT
+do
+ case "$OPT" in
+   d) do_deep_clean="yes";;
+   D) TOP="$OPTARG";;
+   u) do_du="yes";;
+   v) verbose="yes";;
+   *) fatal;;
+ esac
+done
+
+shiftcount=`expr $OPTIND - 1`
+shift $shiftcount
+
+test ${TOP} != "NOT_SET"
+check_status $? "TOP directory not specified"
+
+test -d ${TOP}
+check_status $? "TOP directory does not exist -- ${TOP}"
+
+######## Done checking arguments
+
+if [ ${verbose} = "yes" ] ; then
+   echo "Top directory     : " ${TOP}
+   echo "Do Deep Clean     : " ${do_deep_clean}
+   echo "Report Disk Usage : " ${do_du}
+   echo "Verbose           : " ${verbose}
+   echo
+fi
+
+# Disk usage before clean up
+if [ ${do_du} = "yes" ] ; then
+  echo BEFORE: `du -s -h ${TOP}`
+fi
+
+# Now remove build artifacts 
+
+# clean rtems directory
+cd ${TOP}/rtems
+check_status $? "cd ${TOP}/rtems failed"
+
+rm -rf *.log config-*.ini build b-*
+./waf distclean >/dev/null
+check_status $? "waf distclean failed"
+
+# clean RSB
+for RSBDIR in rtems bare
+do
+  cd ${TOP}/rtems-source-builder/${RSBDIR}
+  check_status $? "cd ${TOP}/${RSBDIR} failed"
+
+  rm -rf build tmp l-* nohup* rsb*
+
+  if [ ${do_deep_clean} = "yes" ] ; then
+    rm -rf sources patches
+  fi
+done
+
+# Clean up tools -- only tools/5, etc.
+if [ ${do_deep_clean} = "yes" ] ; then
+  rm -rf ${TOP}/tools/[5678]
+fi
+
+# Disk usage after clean up
+if [ ${do_du} = "yes" ] ; then
+  echo AFTER: `du -s -h ${TOP}`
+fi
+
+exit 0
+
