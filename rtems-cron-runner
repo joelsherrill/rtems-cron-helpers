@@ -114,6 +114,12 @@ done
 
 update()
 {
+  # Cannot update if it isn't a git clone
+  if [ ! -d .git ] ; then
+    echo 0
+    return 0
+  fi
+
   # This is OK except for rtems-libbsd
   case ${version} in
     6|7) branch=master ;;
