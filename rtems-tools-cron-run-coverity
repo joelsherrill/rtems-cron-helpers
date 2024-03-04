@@ -160,7 +160,7 @@ fi
 if [ ${rtems_tools_updated} = "yes" ] ; then
   cd ${rtems_tools_dir}/..
 
-  ${coverity_runner}
+  sh -x ${coverity_runner}
 
 fi
 
