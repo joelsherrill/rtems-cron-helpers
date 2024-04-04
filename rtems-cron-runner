@@ -112,6 +112,18 @@ do
   check_status $? "${d} is not present"
 done
 
+clean_before()
+{
+   cd ${rtemsdir}
+   rm -rf *.ini [cb]-*.log build b-*
+
+   cd ${TOP}/rtems-source-builder/rtems
+   rm -rf build *.log l-*.txt sources patches
+
+   cd ${TOP}/rtems-source-builder/bare
+   rm -rf build *.log l-*.txt sources patches
+}
+
 update()
 {
   # Cannot update if it isn't a git clone
@@ -133,6 +145,9 @@ update()
 }
 
 start=`date`
+
+# Remove remnants of previous runs
+clean_before
 
 if [ ${do_git_update} = "yes" ] ; then
   # What needs updating
