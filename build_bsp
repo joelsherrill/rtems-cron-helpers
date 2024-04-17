@@ -310,9 +310,11 @@ else
 fi
 
 echo "Using ${RTEMSDIR} for RTEMS source"
+
+PARAVIRT_WAF=False
 # CONSOLE_ARGS="USE_COM1_AS_CONSOLE=1"
 case ${BSP} in 
-  deos)      PARAVIRT=--enable-paravirt ;;
+  deos)      EXTRA_ARGS=--enable-paravirt ; PARAVIRT_WAF=True;;
   #erc32)     EXTRA_ARGS="CONSOLE_USE_INTERRUPTS=" ;;
   pc*)        EXTRA_ARGS="IDE_USE_PRIMARY_INTERFACE=0" ;;
   rv*_spike) EXTRA_ARGS="CPPFLAGS=-DRISCV_ENABLE_HTIF_SUPPORT=1" ;;
@@ -384,6 +386,7 @@ if [ ${do_waf} = "yes" ] ; then
          -e "s/^RTEMS_PROFILING =.*$/RTEMS_PROFILING = ${PROFILING_WAF}/" \
          -e "s/^RTEMS_SMP =.*$/RTEMS_SMP = ${SMP_WAF}/" \
          -e "s/^RTEMS_MP =.*$/RTEMS_MP = ${MP_WAF}/" \
+         -e "s/^RTEMS_PARAVIRT =.*$/RTEMS_PARAVIRT = ${PARAVIRT_WAF}/" \
          -e "s/^__RTEMS_ADA__ =.*$/__RTEMS_ADA__ = ${ADA_WAF}/" \
          -e "s/^BUILD_ADATESTS =.*$/BUILD_ADATESTS = ${ADA_WAFTESTS}/" \
          -e "s/^RTEMS_CXX =.*$/RTEMS_CXX = ${CXX_WAF}/" \
