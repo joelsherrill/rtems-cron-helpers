@@ -114,7 +114,7 @@ update()
 {
   # This is OK except for rtems-libbsd
   case ${version} in
-    6|7) branch=master ;;
+    6|7) branch=main ;;
     *)   branch=${version} ;;
   esac
 

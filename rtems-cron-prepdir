@@ -101,9 +101,10 @@ echo "Preparing ${TOP}..."
 cd ${TOP}
 
 if [ ${from_git} = "yes" ] ; then
-  for d in rtems rtems-source-builder
+  for d in rtos/rtems tools/rtems-source-builder
   do
-    git clone git://git.rtems.org/${d}.git
+    #git clone git://git.rtems.org/${d}.git
+    git clone https://gitlab.rtems.org/rtems/${d}.git
     check_status $? "unable to git clone ${d}"
   done
 elif [ ${from_release} = "yes" ] ; then

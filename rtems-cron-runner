@@ -134,7 +134,7 @@ update()
 
   # This is OK except for rtems-libbsd
   case ${version} in
-    6|7) branch=master ;;
+    6|7) branch=main ;;
     *)   branch=${version} ;;
   esac
 
@@ -356,12 +356,12 @@ test_single_bsp()
   # Has waf, prefer it
   if [ -r ${TOP}/rtems/waf ] ; then
     # (NO DEBUG) Is this an RTEMS version with a waf , then build that way
-    ${exedir}/build_bsp -w -V ${version} -T ${TOP} ${BB_ARGS} \
+    ${exedir}/build_bsp -w -t -V ${version} -T ${TOP} ${BB_ARGS} \
        ${SMP_ARGS} ${cpu} ${bsp}
     LOG ${?} "waf build of ${cpu} ${bsp} (${SMP}/NODEBUG)"
 
     # (DEBUG) Is this an RTEMS version with a waf , then build that way
-    ${exedir}/build_bsp -w -V ${version} -T ${TOP} ${BB_ARGS} \
+    ${exedir}/build_bsp -w -t -V ${version} -T ${TOP} ${BB_ARGS} \
        ${SMP_ARGS} -D ${cpu} ${bsp}
     results=$?
     LOG ${results} "waf build of ${cpu} ${bsp} (${SMP}/DEBUG)"
@@ -373,11 +373,11 @@ test_single_bsp()
 
   elif [ -r ${TOP}/rtems/configure.ac ] ; then
     # (NO DEBUG) Is this an RTEMS version with an autoconf build, then build that way
-    ${exedir}/build_bsp -a -V ${version} -T ${TOP} ${BB_ARGS} ${SMP_ARGS}    ${cpu} ${bsp}
+    ${exedir}/build_bsp -a -t -V ${version} -T ${TOP} ${BB_ARGS} ${SMP_ARGS}    ${cpu} ${bsp}
     LOG $? "autoconf build of ${cpu} ${bsp} (${SMP}/NODEBUG)"
 
     # (DEBUG) Is this an RTEMS version with an autoconf build, then build that way
-    ${exedir}/build_bsp -a -V ${version} -T ${TOP} ${BB_ARGS} ${SMP_ARGS} -D ${cpu} ${bsp}
+    ${exedir}/build_bsp -a -t -V ${version} -T ${TOP} ${BB_ARGS} ${SMP_ARGS} -D ${cpu} ${bsp}
     LOG $? "autoconf build of ${cpu} ${bsp} (${SMP}/DEBUG)"
     if [ $? -eq 0 ] ; then
       rm -rf b-${bsp}
