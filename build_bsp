@@ -393,7 +393,22 @@ if [ ${do_waf} = "yes" ] ; then
          -e "s/^RTEMS_NETWORKING =.*$/RTEMS_NETWORKING = ${LEGACY_NET_WAF}/" \
          -e "s/^RTEMS_POSIX_API =.*$/RTEMS_POSIX_API = ${POSIX_API_WAF}/" \
          -e "s/^BUILD_TESTS =.*$/BUILD_TESTS = ${TESTS_ALL_WAF}/" \
-         -e "s/^BUILD_SAMPLES =.*$/BUILD_SAMPLES = ${TESTS_SAMPLES_WAF}/" | \
+         -e "s/^BUILD_SAMPLES =.*$/BUILD_SAMPLES = ${TESTS_SAMPLES_WAF}/" \
+         -e "s/^BUILD_TESTS = .*$/BUILD_TESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_ADATESTS = F.*$/BUILD_ADATESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_BENCHMARKS = F.*$/BUILD_BENCHMARKS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_FSTESTS = F.*$/BUILD_FSTESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_LIBTESTS = F.*$/BUILD_LIBTESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_MPTESTS = F.*$/BUILD_MPTESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_PSXTESTS = F.*$/BUILD_PSXTESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_PSXTMTESTS = F.*$/BUILD_PSXTMTESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_RHEALSTONE = F.*$/BUILD_RHEALSTONE = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_SAMPLES = .*$/BUILD_SAMPLES = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_SMPTESTS = F.*$/BUILD_SMPTESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_SPTESTS = F.*$/BUILD_SPTESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_TMTESTS = F.*$/BUILD_TMTESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_UNITTESTS = F.*$/BUILD_UNITTESTS = ${TESTS_ALL_WAF}/" \
+         -e "s/^BUILD_VALIDATIONTESTS = F.*$/BUILD_VALIDATIONTESTS = ${TESTS_ALL_WAF}/" | \
      case ${BSP} in
        rv*spike) 
          sed \
