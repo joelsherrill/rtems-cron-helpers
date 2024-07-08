@@ -168,7 +168,7 @@ if [ ${do_git_update} = "yes" ] ; then
   test ${verbose} = "yes" && echo "rtems: ${c} updates"
   INFO "rtems had ${c} revisions to update" 
 
-  cd ${TOP}/sourceware-mirror-newlib-cygwin
+  cd ${TOP}/newlib-cygwin
   newlib_updated="no"
   c=`update`
   if [ ${c} -ne 0 ] ; then

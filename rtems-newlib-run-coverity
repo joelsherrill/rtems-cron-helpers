@@ -29,7 +29,7 @@ do_native=no
 RTEMS_CPU=sparc
 RTEMS_TARGET=${RTEMS_CPU}-rtems6
 RTEMS_BSP=leon3
-RTEMS_TOOLS=/home/joel/rtems-work/tools/6/
+RTEMS_TOOLS=/home/joel/rtems-cron-coverity/tools/6/
 # RTEMS_TOOLS=/home/joel/test-gcc/install-gcc9
 
 PROJECT_NAME=RTEMS-Newlib
@@ -72,9 +72,9 @@ if [ ${do_native} != "yes" ] ; then
   check_fatal $? "Unable to find ${RTEMS_TARGET}-g++"
 fi
 
-NEWLIB=sourceware-mirror-newlib-cygwin
+NEWLIB=newlib-cygwin
 test -d ${NEWLIB}
-check_fatal $? "RTEMS newlib git mirror should be in the current directory"
+check_fatal $? "newlib git should be in the current directory"
 
 test ${LOGNAME} = "joel"
 check_fatal $? "For now, Coverity must be run by joel"
