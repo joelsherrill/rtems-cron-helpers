@@ -483,6 +483,7 @@ if [ ${do_run} = "yes" -a ${status} -eq 0 ] ; then
     fi
     time LD_LIBRARY_PATH=${RTEMS_TOOLS_DIR}/lib64 \
       rtems-test \
+      --jobs ${jobs} \
       --rtems-tools=${RTEMS_TOOLS_DIR} \
       --rtems-bsp=${TESTER_BSP} \
       --log=run-${TESTER_BSP}.log \
