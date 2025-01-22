@@ -44,6 +44,23 @@ Release Candidate Testing
     >nohup-510rc2-2.out </dev/null 2>&1 &
 ~~~~
 
+~~~~
+  rm -rf rtems-cron-6.1-rc7
+   ~/rtems-cron-helpers/rtems-cron-prepdir -D /home/joel/rtems-cron-6.1-rc8 -r -R https://ftp.rtems.org/pub/rtems/releases/6/rc/6.1-rc8/ -t 6.1-rc8
+
+   nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner -v -g -f -V 6 -D  /home/joel/rtems-cron-6.1-rc8 >nohup-6.1rc8.out </dev/null 2>&1 &
+
+~~~~
+
+~~~~
+  rm -rf rtems-cron-6.1-rc8
+   ~/rtems-cron-helpers/rtems-cron-prepdir -D /home/joel/rtems-cron-6.1 -r -R https://ftp.rtems.org/pub/rtems/releases/6/6.1/ -t 6.1
+
+   nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner -v -g -f -V 6 -D  /home/joel/rtems-cron-6.1 >nohup-6.1.out </dev/null 2>&1 &
+
+~~~~
+
+
 Preparation
 ===========
 
