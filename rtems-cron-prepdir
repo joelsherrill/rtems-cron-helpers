@@ -12,9 +12,9 @@ USAGE=\
   -g               prep from git (default=no)
   -r               prep from release (default=no)
   -R URL           release URL
-  -t TAG           release tag/version (e.g. rtems-TAG.tar.xz
+  -t TAG           release tag/version (e.g. rtems-TAG.tar.xz)
   -v               verbose (default=no)
-  -V               RTEMS Version (default=5)
+  -V               RTEMS Version (default=7)
 "
 
 #   log an error to stderr
@@ -48,7 +48,7 @@ exedir=`( cd "${exedir}" && pwd )`
 
 # Default Behavioral variables to set
 verbose="no"
-version="5"
+version="7"
 TOP=${HOME}/rtems-cron
 from_git="no"
 from_release="no"

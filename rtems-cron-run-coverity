@@ -83,7 +83,7 @@ check_status $? "${coverity_runner_newlib} is not present"
 
 # Default Behavioral variables to set
 verbose="no"
-version="6"
+version="7"
 force_build="no"
 do_git_update="yes"
 do_email="yes"
