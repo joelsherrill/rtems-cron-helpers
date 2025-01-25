@@ -1,7 +1,7 @@
 #! /bin/sh -x
 
-version=6
-TOP=/home/joel/rtems-cron-6
+version=7
+TOP=/home/joel/rtems-cron-7
 do_autoconf=no
 
 # directory where run from

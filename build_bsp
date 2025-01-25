@@ -12,7 +12,7 @@ USAGE=\
   -R dir           RTEMS directory (default=rtems)
   -T dir           Top of working directory (default=${HOME}/rtems-work)
   -B dir           BSP install directory (for default, see below)
-  -V n             version (default=5)
+  -V n             version (default=7)
   -C               clean when build is successful (default=yes)
   -a               use autoconf build system (default=yes)
   -w               use waf build system (default=no)
@@ -88,7 +88,7 @@ ENABLE_CXX="yes"
 do_autoconf="yes"
 do_waf="no"
 do_clean="yes"
-RTEMS_VERSION=5
+RTEMS_VERSION=7
 RTEMSDIR=${RTEMSDIR:-rtems}
 TOP=${TOP:-${HOME}/rtems-work}
 
