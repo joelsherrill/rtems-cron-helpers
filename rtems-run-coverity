@@ -21,10 +21,8 @@
 COVERITY_BASE=${HOME}/coverity
 
 # Be careful -- the tar and the directory do not always match
-#COVERITY_VERSION=cov-analysis-linux64-2022.06
-#COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2022.6.0
-COVERITY_VERSION=cov-analysis-linux64-2023.6.2
-COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2023.6.2
+COVERITY_VERSION=cov-analysis-linux64-2024.6.1
+COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2024.6.1
 
 do_native=no
 RTEMS_CPU=sparc

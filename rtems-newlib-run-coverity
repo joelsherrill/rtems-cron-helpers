@@ -18,19 +18,17 @@
 #
 
 COVERITY_BASE=${HOME}/coverity
+RTEMS_BASE=${HOME}/rtems-cron-coverity
 
 # Be careful -- the tar and the directory do not always match
-#COVERITY_VERSION=cov-analysis-linux64-2022.06
-#COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2022.6.0
-COVERITY_VERSION=cov-analysis-linux64-2023.6.2
-COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2023.6.2
+COVERITY_VERSION=cov-analysis-linux64-2024.6.1
+COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2024.6.1
 
 do_native=no
 RTEMS_CPU=sparc
-RTEMS_TARGET=${RTEMS_CPU}-rtems6
+RTEMS_TARGET=${RTEMS_CPU}-rtems7
 RTEMS_BSP=leon3
-RTEMS_TOOLS=/home/joel/rtems-cron-coverity/tools/6/
-# RTEMS_TOOLS=/home/joel/test-gcc/install-gcc9
+RTEMS_TOOLS=${RTEMS_BASE}/tools/7/
 
 PROJECT_NAME=RTEMS-Newlib
 COVERITY_SCAN_TOKEN=BtR7PhfmMTP6Z3BnAU8tNw
@@ -71,6 +69,9 @@ if [ ${do_native} != "yes" ] ; then
   GXX=`type ${RTEMS_TARGET}-g++ 2>/dev/null`
   check_fatal $? "Unable to find ${RTEMS_TARGET}-g++"
 fi
+
+cd ${RTEMS_BASE}
+check_fatal $? "RTEMS Top working directory not found"
 
 NEWLIB=newlib-cygwin
 test -d ${NEWLIB}
