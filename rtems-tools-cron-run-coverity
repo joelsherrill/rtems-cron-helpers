@@ -16,7 +16,7 @@ USAGE=\
   -f               force build (default=no)
   -g               do git update (default=yes)
   -D               Top directory (default=${HOME}/rtems-cron-coverity)
-  -V               RTEMS Version (default=5)
+  -V               RTEMS Version (default=7)
 "
 
 #   log an error to stderr

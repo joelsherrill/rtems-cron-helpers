@@ -40,7 +40,7 @@ Release Candidate Testing
     -D ${HOME}/rtems-cron-5.1-rc2 -r \
     -R https://ftp.rtems.org/pub/rtems/releases/5/rc/5.1-rc2/ -t 5.1-rc2
   nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner \
-    -v -g -f -V 5 -D  /home/joel/rtems-cron-5.1-rc2 \
+    -v -g -f -V 6 -D  /home/joel/rtems-cron-5.1-rc2 \
     >nohup-510rc2-2.out </dev/null 2>&1 &
 ~~~~
 
