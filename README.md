@@ -18,7 +18,7 @@ for rtems-cron-runner.  This is an example:
 ~~~~
 ./rtems-cron-prepdir -g -V 6 -D ${HOME}/rtems-cron-6
 
-./rtems-cron-helpers/rtems-cron-runner -f -V 5 -T  ${HOME}/rtems-cron-5 
+./rtems-cron-helpers/rtems-cron-runner -f -V 6 -T  ${HOME}/rtems-cron-6 
 ~~~~
 
 

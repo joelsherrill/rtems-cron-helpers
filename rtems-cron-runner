@@ -13,7 +13,7 @@ USAGE=\
   -f               force build (default=no)
   -g               do git update (default=yes)
   -D               Top directory (default=${HOME}/rtems-cron-@version@)
-  -V               RTEMS Version (default=5)
+  -V               RTEMS Version (default=7)
   -m               send email (default=yes)
   -F               From address (default=joel@rtems.org)
   -T               To address (default=build@rtems.org)
@@ -67,11 +67,11 @@ exedir=`( cd "${exedir}" && pwd )`
 
 # Default Behavioral variables to set
 verbose="no"
-version="5"
+version="7"
 force_build="no"
 do_git_update="yes"
 do_email="yes"
-TOP=${HOME}/rtems-cron-${version}
+TOP="NOT_SET"
 FROM_ADDRESS="joel@rtems.org"
 TO_ADDRESS="build@rtems.org"
 
@@ -93,8 +93,12 @@ done
 shiftcount=`expr $OPTIND - 1`
 shift $shiftcount
 
+if [ "${TOP}" = "TOP_NOT_SET" ] ; then
+  TOP=${HOME}/rtems-cron-${version}
+fi
+
 if [ ! -d ${TOP} ] ; then
-  echo "echo Bad TOP directory (${TOP}!"
+  echo "echo Bad TOP directory (${TOP})!"
   exit 1
 fi
 
@@ -134,7 +138,7 @@ update()
 
   # This is OK except for rtems-libbsd
   case ${version} in
-    6|7) branch=main ;;
+    7|8) branch=main ;;
     *)   branch=${version} ;;
   esac
 
@@ -142,6 +146,7 @@ update()
   git fetch >/dev/null
   c=`git rev-list HEAD...origin/${branch} --count 2>/dev/null`
   echo ${c}
+  return 0
 }
 
 start=`date`
@@ -211,6 +216,7 @@ do_rsb_build_tools()
   echo DATESTAMP=`date`
     cd ${TOP}/rtems-source-builder/rtems
     rm -rf ${TOP}/tools/${version}/*
+    results=0
     cat config/${version}/rtems-all.bset | while read rset
     do
       rcpu=`echo ${rset} | cut -d'-' -f2`
@@ -282,7 +288,7 @@ do_rsb_build_tools()
 do_bsp_builder()
 {
   case ${version} in
-    5|6)
+    5|6|7|8)
       echo DATESTAMP=`date`
 	${TECHO} time ${TOP}/tools/${version}/bin/rtems-bsp-builder \
 	  --rtems=${rtemsdir} \
