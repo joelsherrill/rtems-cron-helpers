@@ -26,7 +26,7 @@ COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2024.6.1
 
 do_native=no
 RTEMS_CPU=sparc
-RTEMS_TARGET=${RTEMS_CPU}-rtems6
+RTEMS_TARGET=${RTEMS_CPU}-rtems7
 RTEMS_BSP=leon3
 RTEMS_TOOLS=/home/joel/rtems-work/tools/6/
 
