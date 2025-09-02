@@ -14,6 +14,7 @@ USAGE=\
   -g               do git update (default=yes)
   -D               Top directory (default=${HOME}/rtems-cron-@version@)
   -V               RTEMS Version (default=7)
+  -s               RTEMS Tool Version (default=7)
   -m               send email (default=yes)
   -F               From address (default=joel@rtems.org)
   -T               To address (default=build@rtems.org)
@@ -68,6 +69,7 @@ exedir=`( cd "${exedir}" && pwd )`
 # Default Behavioral variables to set
 verbose="no"
 version="7"
+subversion="7"
 force_build="no"
 do_git_update="yes"
 do_email="yes"
@@ -75,8 +77,10 @@ TOP="NOT_SET"
 FROM_ADDRESS="joel@rtems.org"
 TO_ADDRESS="build@rtems.org"
 
-while getopts "fgmtvD:F:T:V:" OPT
+echo $*
+while getopts "fgmvD:F:s:T:V:" OPT
 do
+ echo $OPT
  case "$OPT" in
    f) force_build="yes";;
    g) do_git_update="no" ;;
@@ -84,6 +88,7 @@ do
    v) verbose="yes";;
    D) TOP="$OPTARG";;
    F) FROM_ADDRESS="$OPTARG";;
+   s) subversion="$OPTARG" ;;
    T) TO_ADDRESS="$OPTARG";;
    V) version="$OPTARG";;
    *) fatal;;
@@ -101,6 +106,20 @@ if [ ! -d ${TOP} ] ; then
   echo "echo Bad TOP directory (${TOP})!"
   exit 1
 fi
+
+if [ X${subversion} != X${version} ] ; then
+  case X${version} in
+    7)
+      if [ X${subversion} != X"next" ] ; then
+        echo "version=${version} and subversion=${subversion}"
+        echo "This is not a recognized combination"
+        exit 1
+      fi
+      ;;
+    *)
+  esac
+fi
+
 
 # Empty it out and maybe set one standard contents
 LOGFILE=${TOP}/all-log.txt
@@ -138,8 +157,8 @@ update()
 
   # This is OK except for rtems-libbsd
   case ${version} in
-    7|8) branch=main ;;
-    *)   branch=${version} ;;
+    7|next) branch=main ;;
+    *)      branch=${version} ;;
   esac
 
   git checkout ${branch} >/dev/null
@@ -200,6 +219,8 @@ if [ ${verbose} = "yes" ] ; then
   echo Forced Update: ${force_build}
   echo RSB Updated: ${rsb_updated}
   echo RTEMS Updated: ${rtems_updated}
+  echo RTEMS Version: ${version}
+  echo RTEMS Subversion: ${subversion}
 fi
 
 if [ ${force_build} = "no" -a \
@@ -211,21 +232,22 @@ fi
 do_rsb_build_tools()
 {
   version=$1
+  subversion=$2
 
   # Basic Cross-compilation Tools
   echo DATESTAMP=`date`
     cd ${TOP}/rtems-source-builder/rtems
     rm -rf ${TOP}/tools/${version}/*
     results=0
-    cat config/${version}/rtems-all.bset | while read rset
+    cat config/${subversion}/rtems-all.bset | while read rset
     do
       rcpu=`echo ${rset} | cut -d'-' -f2`
       ${TECHO} time ../source-builder/sb-set-builder \
          ${RSB_MAIL_ARGS} \
          --keep-going \
-         --log=l-${rcpu}-${version}.txt \
+         --log=l-${rcpu}-${subversion}.txt \
          --prefix=${TOP}/tools/${version} \
-         ${rset} >o-${rcpu}-${version}.txt 2>&1
+         ${rset} >o-${rcpu}-${subversion}.txt 2>&1
       results=$?
       LOG ${results} "RSB build of ${rset}"
     done
@@ -290,15 +312,15 @@ do_bsp_builder()
   case ${version} in
     5|6|7|8)
       echo DATESTAMP=`date`
-	${TECHO} time ${TOP}/tools/${version}/bin/rtems-bsp-builder \
-	  --rtems=${rtemsdir} \
-	  --build-path=${TOP}/build \
-	  --prefix=${TOP}/tools/${version}/bsps \
-	  --log=${TOP}/bsp-builder.log \
-	  --warnings-report=warnings.log \
-	   ${RSB_MAIL_ARGS} \
-	  --profiles=everything
-	LOG ${?} "rtems-bsp-builder build of everything"
+        ${TECHO} time ${TOP}/tools/${version}/bin/rtems-bsp-builder \
+          --rtems=${rtemsdir} \
+          --build-path=${TOP}/build \
+          --prefix=${TOP}/tools/${version}/bsps \
+          --log=${TOP}/bsp-builder.log \
+          --warnings-report=warnings.log \
+           ${RSB_MAIL_ARGS} \
+          --profiles=everything
+        LOG ${?} "rtems-bsp-builder build of everything"
       echo DATESTAMP=`date`
       ;;
     *)
@@ -311,7 +333,7 @@ export PATH=${TOP}/tools/${version}/bin:${PATH}
 
 # Build RTEMS ${version}.x tools if needed
 if [ ${rsb_updated} = "yes" ] ; then
-  do_rsb_build_tools ${version}
+  do_rsb_build_tools ${version} ${subversion}
 fi
 
 # Ensure this is after the RSB has built tools and PATH is updated
@@ -408,12 +430,19 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
     # Make sure Spike is available for these BSPs
     type spike >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
-      for bsp in rv32iac_spike rv32imac_spike rv32imafc_spike \
-          rv32i rv32imafdc rv64imafd rv64imafdc \
-          rv32imafdc_spike rv32imafd_spike rv32im_spike rv32i_spike \
-	  rv64imac_spike rv64imafd_spike rv64imafdc_spike
+      # Hesham recommended that this subset because it represents
+      # what is really in the wild.
+      #
+      #  rv32i rv32imac rv32imafdc rv64imac rv64imafdc
+      #
+      # This is the full set possible.
+      #  rv32iac rv32imac rv32imafc rv32i rv32imafdc rv64imafd rv64imafdc
+      rv32imafdc rv32imafd rv32im rv32i rv64imac rv64imafd rv64imafdc
+
+      for bsp in rv32i_spike rv32imac_spike rv32imafdc_spike \
+                 rv64imac_spike rv64imafdc_spike
       do 
-	test_single_bsp riscv ${bsp}
+        test_single_bsp riscv ${bsp}
       done
     fi
 
@@ -421,10 +450,13 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
     type qemu-system-arm >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
       test_single_bsp arm realview_pbx_a9_qemu
-      # test_single_bsp arm xilinx_zynq_a9_qemu
+      test_single_bsp arm xilinx_zynq_a9_qemu
       test_single_bsp arm xilinx_zynq_zc706_qemu
 
-      test_single_bsp smp arm xilinx_zynq_a9_qemu_smp
+      # Requires Xilinx Qemu which is not built in this sweep
+      # test_single_bsp smp arm xilinx_zynq_a9_qemu_smp
+
+      test_single_bsp smp arm realview_pbx_a9_qemu_smp
     fi
 
     # Make sure AARCH64 Qemu is available for these BSPs
@@ -434,12 +466,12 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
       test_single_bsp aarch64 a53_lp64_qemu
       test_single_bsp aarch64 a72_ilp32_qemu
       test_single_bsp aarch64 a72_lp64_qemu
-      test_single_bsp aarch64 xilinx_versal_lp64_qemu
-      test_single_bsp aarch64 xilinx_zynqmp_ilp32_qemu
-      test_single_bsp aarch64 xilinx_zynqmp_lp64_qemu
+      test_single_bsp aarch64 versal_qemu
+      test_single_bsp aarch64 zynqmp_qemu_ilp32
+      test_single_bsp aarch64 zynqmp_emu
 
-      test_single_bsp smp aarch64 xilinx_zynqmp_ilp32_qemu
-      test_single_bsp smp aarch64 xilinx_zynqmp_lp64_qemu
+      test_single_bsp smp aarch64 zynqmp_qemu_ilp32
+      test_single_bsp smp aarch64 zynqmp_qemu
     fi
 
     # Make sure i386 Qemu is available for these BSPs
@@ -449,11 +481,43 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
       test_single_bsp i386 pc686
     fi
 
+    # Make sure Microblaze Qemu is available for these BSPs
+    # REQUIRES XILINX Qemu
+    #type qemu-system-microblaze >/dev/null 2>&1
+    #if [ $? -eq 0 ] ; then
+    #  test_single_bsp microblaze kcu105_qemu
+    #fi
+
+    # Make sure or1k Qemu is available for these BSPs
+    #type qemu-system-or1k >/dev/null 2>&1
+    #if [ $? -eq 0 ] ; then
+    #  test_single_bsp or1k generic_or1k
+    #fi
+
+    # Make sure x86_64 Qemu is available for these BSPs
+    #type qemu-system-x86_64 >/dev/null 2>&1
+    #if [ $? -eq 0 ] ; then
+    #  test_single_bsp x86_64 amd64efi_grub_qemu
+    #  test_single_bsp x86_64 amd64
+
+    #  test_single_bsp yes x86_64 amd64
+    #fi
+
+    # Make sure RISC-V Qemu is available for these BSPs
+    #type qemu-system-riscv >/dev/null 2>&1
+    if [ $? -eq 0 ] ; then
+      test_single_bsp riscv rv32i
+      test_single_bsp riscv rv32imafdc
+      test_single_bsp riscv rv64imafd
+      test_single_bsp riscv rv64imafdc
+      test_single_bsp yes x86_64 amd64
+    fi
+
     # Now build all supported BSP bset stacks
     cd ${TOP}/rtems-source-builder/rtems
-    bsp_bsets=`ls -1 config/${version}/bsps/*.bset 2>/dev/null | wc -l`
-    if [ ${bsp_bsets} -ne 0 ] ; then
-      for bset in ${bsp_bsets}
+    bsp_bsets_count=`ls -1 config/${version}/bsps/*.bset 2>/dev/null | wc -l`
+    if [ ${bsp_bsets_count} -ne 0 ] ; then
+      for bset in `ls -1 config/${version}/bsps/*.bset 2>/dev/null`
       do
         ${TECHO} time ../source-builder/sb-set-builder \
            ${RSB_MAIL_ARGS} \
