@@ -38,6 +38,11 @@ RTEMS_TOOLS_DIR    default is \${TOP}/tools/\${RTEMS_VERSION}}
 BSP_INSTALL        default is \${BSP_INSTALL:-\${RTEMS_TOOLS_DIR}/bsp-install}
 "
 
+usage()
+{
+  echo $USAGE
+}
+
 #   log an error to stderr
 prerr()
 {
@@ -119,7 +124,7 @@ do
    c) ENABLE_CXX="no" ;;
    C) do_clean="no" ;;
    S) do_size_report="yes" ;;
-   *) fatal;;
+   *) usage ; exit 1;;
  esac
 done
 

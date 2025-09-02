@@ -18,8 +18,17 @@ for rtems-cron-runner.  This is an example:
 ~~~~
 ./rtems-cron-prepdir -g -V 6 -D ${HOME}/rtems-cron-6
 
-./rtems-cron-helpers/rtems-cron-runner -f -V 6 -T  ${HOME}/rtems-cron-6 
+./rtems-cron-helpers/rtems-cron-runner -f -V 6 -D  ${HOME}/rtems-cron-6 
 ~~~~
+
+And one for setting up to test "next" tools
+
+~~~~
+./rtems-cron-prepdir -g -V 7 -D ${HOME}/rtems-cron-next
+
+./rtems-cron-helpers/rtems-cron-runner -f -V 7 -s next -D ${HOME}/rtems-cron-next
+~~~~
+
 
 
 Before executing the time consuming rtems-cron-runner script, it is
