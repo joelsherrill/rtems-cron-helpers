@@ -40,6 +40,23 @@ to build@rtems.org, then you will have to look in the long files.
 The rtems-cron-runner script takes long enough enough to run (> 24
 hours for a full sweep) that you should "nohup" it.
 
+crontab Entries
+===============
+
+~~~~
+  # Run update-cron-helpers at 11:50PM every day
+  50 23 * * * /usr/local/bin/update-cron-helpers
+
+  # RTEMS Tools Coverity every 3 hours at nn:00
+  0 0,3,6,9,12,15,18,21 * * * /usr/bin/flock -n /tmp/tools.lock ~/rtems-cron-helpers/rtems-tools-cron-run-coverity -v >${HOME}/nohup-rtems-tools.out 2>&1 </dev/null
+
+  # Newlib Coverity every 3 hours at nn:15
+  15 0,3,6,9,12,15,18,21 * * * /usr/bin/flock -n /tmp/newlib.lock ~/rtems-cron-helpers/rtems-newlib-run-coverity >${HOME}/nohup-rtems-newlib.out 2>&1 </dev/null
+
+  # RTEMS Coverity every 3 hours at nn:00
+  0  1,4,7,10,13,16,19,22 * * * /usr/bin/flock -n /tmp/rtems.lock ~/rtems-cron-helpers/rtems-cron-run-coverity >${HOME}/nohup-rtems.out 2>&1 </dev/null
+~~~~
+
 Release Candidate Testing
 =========================
 
