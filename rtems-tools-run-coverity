@@ -21,8 +21,8 @@
 COVERITY_BASE=${HOME}/coverity
 
 # Be careful -- the tar and the directory do not always match
-COVERITY_VERSION=cov-analysis-linux64-2024.6.1
-COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2024.6.1
+COVERITY_VERSION=cov-analysis-linux64-2024.12.1
+COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2024.12.1
 
 RTEMS_TOOLS=${HOME}/rtems-cron-coverity/tools/6/
 

@@ -21,8 +21,8 @@ COVERITY_BASE=${HOME}/coverity
 RTEMS_BASE=${HOME}/rtems-cron-coverity
 
 # Be careful -- the tar and the directory do not always match
-COVERITY_VERSION=cov-analysis-linux64-2024.6.1
-COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2024.6.1
+COVERITY_VERSION=cov-analysis-linux64-2024.12.1
+COVERITY=${COVERITY_BASE}/cov-analysis-linux64-2024.12.1
 
 do_native=no
 RTEMS_CPU=sparc
