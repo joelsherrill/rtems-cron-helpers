@@ -311,17 +311,23 @@ do_bsp_builder()
 {
   case ${version} in
     5|6|7|8)
-      echo DATESTAMP=`date`
-        ${TECHO} time ${TOP}/tools/${version}/bin/rtems-bsp-builder \
-          --rtems=${rtemsdir} \
-          --build-path=${TOP}/build \
-          --prefix=${TOP}/tools/${version}/bsps \
-          --log=${TOP}/bsp-builder.log \
-          --warnings-report=warnings.log \
-           ${RSB_MAIL_ARGS} \
-          --profiles=everything
-        LOG ${?} "rtems-bsp-builder build of everything"
-      echo DATESTAMP=`date`
+      # Make sure RISC-V Qemu is available for these BSPs
+      type ${TOP}/tools/${version}/bin/rtems-bsp-builder >/dev/null 2>&1
+      if [ $? -eq 0 ] ; then
+        echo DATESTAMP=`date`
+          ${TECHO} time ${TOP}/tools/${version}/bin/rtems-bsp-builder \
+            --rtems=${rtemsdir} \
+            --build-path=${TOP}/build \
+            --prefix=${TOP}/tools/${version}/bsps \
+            --log=${TOP}/bsp-builder.log \
+            --warnings-report=warnings.log \
+             ${RSB_MAIL_ARGS} \
+            --profiles=everything
+          LOG ${?} "rtems-bsp-builder build of everything"
+        echo DATESTAMP=`date`
+       else
+         echo "WARNING!! rtems-bsp-builder not found for ${version}"
+       fi
       ;;
     *)
       echo "WARNING!! rtems-bsp-builder not supported by RTEMS ${version}"
@@ -504,7 +510,7 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
     #fi
 
     # Make sure RISC-V Qemu is available for these BSPs
-    #type qemu-system-riscv >/dev/null 2>&1
+    type qemu-system-riscv >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
       test_single_bsp riscv rv32i
       test_single_bsp riscv rv32imafdc
