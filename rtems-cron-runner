@@ -234,6 +234,10 @@ do_rsb_build_tools()
   version=$1
   subversion=$2
 
+  if [ ${subversion} != "next" ]; then
+    subversion=$1
+  fi
+
   # Basic Cross-compilation Tools
   echo DATESTAMP=`date`
     cd ${TOP}/rtems-source-builder/rtems
