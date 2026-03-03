@@ -70,6 +70,11 @@ check_status $? "TOP directory not specified"
 test -d ${TOP}
 check_status $? "TOP directory does not exist -- ${TOP}"
 
+case ${TOP} in
+  /*);;
+  *) check_status 1 "TOP directory is not a full path -- ${TOP}"
+esac
+
 ######## Done checking arguments
 
 if [ ${verbose} = "yes" ] ; then
@@ -99,7 +104,7 @@ check_status $? "waf distclean failed"
 for RSBDIR in rtems bare
 do
   cd ${TOP}/rtems-source-builder/${RSBDIR}
-  check_status $? "cd ${TOP}/${RSBDIR} failed"
+  check_status $? "cd ${TOP}/rtems-source-builder/${RSBDIR} failed"
 
   rm -rf build tmp l-* nohup* rsb*
 
