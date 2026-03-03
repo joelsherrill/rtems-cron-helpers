@@ -97,8 +97,10 @@ cd ${TOP}/rtems
 check_status $? "cd ${TOP}/rtems failed"
 
 rm -rf *.log config-*.ini build b-*
-./waf distclean >/dev/null
-check_status $? "waf distclean failed"
+if [ -r ./waf ] ; then
+  ./waf distclean >/dev/null
+  check_status $? "waf distclean failed"
+fi
 
 # clean RSB
 for RSBDIR in rtems bare
