@@ -60,14 +60,15 @@ crontab Entries
 Release Candidate Testing
 =========================
 
+https://ftp.rtems.org/pub/rtems/releases/5/rc/5.4-rc1/
 ~~~~
-  rm -rf rtems-cron-5.1-rc2 
+  rm -rf rtems-cron-5.4-rc1 
   ~/rtems-cron-helpers/rtems-cron-prepdir \
-    -D ${HOME}/rtems-cron-5.1-rc2 -r \
-    -R https://ftp.rtems.org/pub/rtems/releases/5/rc/5.1-rc2/ -t 5.1-rc2
+    -D ${HOME}/rtems-cron-5.4-rc1 -r \
+    -R https://ftp.rtems.org/pub/rtems/releases/5/rc/5.4-rc1/ -t 5.4-rc1
   nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner \
-    -v -g -f -V 6 -D  /home/joel/rtems-cron-5.1-rc2 \
-    >nohup-510rc2-2.out </dev/null 2>&1 &
+    -v -g -f -V 5 -D  /home/joel/rtems-cron-5.4-rc1 \
+    >nohup-5.4rc1.out </dev/null 2>&1 &
 ~~~~
 
 ~~~~
@@ -79,10 +80,18 @@ Release Candidate Testing
 ~~~~
 
 ~~~~
-  rm -rf rtems-cron-6.1-rc8
+  rm -rf rtems-cron-6.1
    ~/rtems-cron-helpers/rtems-cron-prepdir -D /home/joel/rtems-cron-6.1 -r -R https://ftp.rtems.org/pub/rtems/releases/6/6.1/ -t 6.1
 
    nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner -v -g -f -V 6 -D  /home/joel/rtems-cron-6.1 >nohup-6.1.out </dev/null 2>&1 &
+
+~~~~
+
+~~~~
+  rm -rf rtems-cron-6.2
+   ~/rtems-cron-helpers/rtems-cron-prepdir -D /home/joel/rtems-cron-6.2 -r -R https://ftp.rtems.org/pub/rtems/releases/6/6.2/ -t 6.2
+
+   nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner -v -g -f -V 6 -D  /home/joel/rtems-cron-6.2 >nohup-6.2.out </dev/null 2>&1 &
 
 ~~~~
 
