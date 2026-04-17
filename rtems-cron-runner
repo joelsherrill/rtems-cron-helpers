@@ -525,15 +525,15 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
 
     # Now build all supported BSP bset stacks
     cd ${TOP}/rtems-source-builder/rtems
-    bsp_bsets_count=`ls -1 config/${version}/bsps/*.bset 2>/dev/null | wc -l`
+    bsp_bsets_count=`ls -1 config/bsps/*.bset 2>/dev/null | wc -l`
     if [ ${bsp_bsets_count} -ne 0 ] ; then
-      for bset in `ls -1 config/${version}/bsps/*.bset 2>/dev/null`
+      for bset in `ls -1 config/bsps/*.bset 2>/dev/null`
       do
         ${TECHO} time ../source-builder/sb-set-builder \
            ${RSB_MAIL_ARGS} \
            --log=l-${bset}-${version}.txt \
            --prefix=${TOP}/tools/${version} \
-           ${version}/bsps/${bset} >o-${bset}-${version}.txt 2>&1
+           bsps/${bset} >o-${bset}-${version}.txt 2>&1
         LOG $? "RSB build of bsps/${bset}"
       done
     fi
