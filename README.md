@@ -76,7 +76,6 @@ https://ftp.rtems.org/pub/rtems/releases/5/rc/5.4-rc1/
    ~/rtems-cron-helpers/rtems-cron-prepdir -D /home/joel/rtems-cron-6.1-rc8 -r -R https://ftp.rtems.org/pub/rtems/releases/6/rc/6.1-rc8/ -t 6.1-rc8
 
    nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner -v -g -f -V 6 -D  /home/joel/rtems-cron-6.1-rc8 >nohup-6.1rc8.out </dev/null 2>&1 &
-
 ~~~~
 
 ~~~~
@@ -95,6 +94,11 @@ https://ftp.rtems.org/pub/rtems/releases/5/rc/5.4-rc1/
 
 ~~~~
 
+  rm -rf rtems-cron-7.0-rc1
+   ~/rtems-cron-helpers/rtems-cron-prepdir -D /home/joel/rtems-cron-7.0-rc1 -r -R https://ftp.rtems.org/pub/rtems/releases/7/rc/7.0-rc1/ -t 7.0-rc1
+
+   nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner -v -g -f -V 7 -D  /home/joel/rtems-cron-7.0-rc1 >nohup-7.0-rc1.out </dev/null 2>&1 &
+~~~~
 
 Preparation
 ===========
