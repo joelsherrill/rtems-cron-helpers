@@ -142,8 +142,6 @@ else
 fi
 
 # Verify version
-    TOOLS_VERSION=7
-    TOOLS_PREFIX_VERSION=next
 case ${RTEMS_VERSION} in
   4.11|5|6|7)
     TOOLS_VERSION=${RTEMS_VERSION}
@@ -153,7 +151,11 @@ case ${RTEMS_VERSION} in
     TOOLS_VERSION=7
     TOOLS_PREFIX_VERSION=next
     ;;
-  *)   fatal "Version must be 4.11, 5, 6, 7, or next" ;;
+  edge) 
+    TOOLS_VERSION=7
+    TOOLS_PREFIX_VERSION=edge
+    ;;
+  *)   fatal "Version must be 4.11, 5, 6, 7, next, or edge" ;;
 esac  
 
 RTEMS_TOOLS_DIR=${RTEMS_TOOLS_DIR:-${TOP}/tools/${TOOLS_PREFIX_VERSION}}
