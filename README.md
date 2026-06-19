@@ -16,6 +16,12 @@ The rtems-cron-prepdir script is used to setup a working directory
 for rtems-cron-runner.  This is an example:
 
 ~~~~
+./rtems-cron-prepdir -g -V 5 -D ${HOME}/rtems-cron-5
+
+./rtems-cron-helpers/rtems-cron-runner -f -V 5 -D  ${HOME}/rtems-cron-5 
+~~~~
+
+~~~~
 ./rtems-cron-prepdir -g -V 6 -D ${HOME}/rtems-cron-6
 
 ./rtems-cron-helpers/rtems-cron-runner -f -V 6 -D  ${HOME}/rtems-cron-6 
