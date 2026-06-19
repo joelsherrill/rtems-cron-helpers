@@ -245,6 +245,7 @@ do_rsb_build_tools()
     results=0
     cat config/${subversion}/rtems-all.bset | while read rset
     do
+      rm -rf build
       rcpu=`echo ${rset} | cut -d'-' -f2`
       ${TECHO} time ../source-builder/sb-set-builder \
          ${RSB_MAIL_ARGS} \
@@ -265,6 +266,7 @@ do_rsb_build_tools()
   # Device Tree Compiler
   echo DATESTAMP=`date`
     cd ${TOP}/rtems-source-builder/bare
+    rm -rf build
     ${TECHO} time ../source-builder/sb-set-builder \
        ${RSB_MAIL_ARGS} \
        --log=l-dtc-${version}.txt \
@@ -281,6 +283,7 @@ do_rsb_build_tools()
   # Spike RISC-V Simulator
   echo DATESTAMP=`date`
     cd ${TOP}/rtems-source-builder/bare
+    rm -rf build
     ${TECHO} time ../source-builder/sb-set-builder \
        ${RSB_MAIL_ARGS} \
        --log=l-spike-${version}.txt \
@@ -297,6 +300,7 @@ do_rsb_build_tools()
   # Qemu Simulator
   echo DATESTAMP=`date`
     cd ${TOP}/rtems-source-builder/bare
+    rm -rf build
     ${TECHO} time ../source-builder/sb-set-builder \
       ${RSB_MAIL_ARGS} \
       --log=l-qemu-${version}.txt \
@@ -529,6 +533,7 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
     if [ ${bsp_bsets_count} -ne 0 ] ; then
       for bset in `ls -1 config/bsps/*.bset 2>/dev/null`
       do
+        rm -rf build
         ${TECHO} time ../source-builder/sb-set-builder \
            ${RSB_MAIL_ARGS} \
            --log=l-${bset}-${version}.txt \

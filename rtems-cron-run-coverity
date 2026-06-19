@@ -219,6 +219,7 @@ do_rsb_build_tools()
   echo DATESTAMP=`date`
     cd ${TOP}/rtems-source-builder/rtems
     rm -rf ${TOP}/tools/${version}/*
+    rm -rf build
     ${TECHO} time ../source-builder/sb-set-builder \
        ${RSB_MAIL_ARGS} \
        --keep-going \
