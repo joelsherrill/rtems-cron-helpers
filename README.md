@@ -1,4 +1,5 @@
 # rtems-cron-helpers
+e main
 
 Introduction
 ============
@@ -26,6 +27,13 @@ for rtems-cron-runner.  This is an example:
 
 ./rtems-cron-helpers/rtems-cron-runner -f -V 6 -D  ${HOME}/rtems-cron-6 
 ~~~~
+
+~~~~
+./rtems-cron-prepdir -g -V 7 -D ${HOME}/rtems-cron-7
+
+./rtems-cron-helpers/rtems-cron-runner -f -V 7 -D  ${HOME}/rtems-cron-7 
+~~~~
+
 
 And one for setting up to test "next" tools
 
@@ -78,10 +86,10 @@ https://ftp.rtems.org/pub/rtems/releases/5/rc/5.4-rc1/
 ~~~~
 
 ~~~~
-  rm -rf rtems-cron-6.1-rc7
-   ~/rtems-cron-helpers/rtems-cron-prepdir -D /home/joel/rtems-cron-6.1-rc8 -r -R https://ftp.rtems.org/pub/rtems/releases/6/rc/6.1-rc8/ -t 6.1-rc8
+  rm -rf rtems-cron-6.3-rc2
+   ~/rtems-cron-helpers/rtems-cron-prepdir -D /home/joel/rtems-cron-6.3-rc2 -r -R https://ftp.rtems.org/pub/rtems/releases/6/rc/6.3-rc2/ -t 6.3-rc2
 
-   nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner -v -g -f -V 6 -D  /home/joel/rtems-cron-6.1-rc8 >nohup-6.1rc8.out </dev/null 2>&1 &
+   nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner -v -g -f -V 6 -D  /home/joel/rtems-cron-6.3-rc2 >nohup-6.3-rc2.out </dev/null 2>&1 &
 ~~~~
 
 ~~~~
