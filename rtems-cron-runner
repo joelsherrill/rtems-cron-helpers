@@ -496,6 +496,12 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
     fi
 
     # Make sure Microblaze Qemu is available for these BSPs
+    type qemu-system-mips >/dev/null 2>&1
+    if [ $? -eq 0 ] ; then
+      test_single_bsp mips malta_qemu
+    fi
+
+    # Make sure Microblaze Qemu is available for these BSPs
     # REQUIRES XILINX Qemu
     #type qemu-system-microblaze >/dev/null 2>&1
     #if [ $? -eq 0 ] ; then
