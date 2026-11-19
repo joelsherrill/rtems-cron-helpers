@@ -498,7 +498,7 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
     # Make sure Microblaze Qemu is available for these BSPs
     type qemu-system-mips >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
-      test_single_bsp mips malta_qemu
+      test ${version} -ge 7 && test_single_bsp mips malta_qemu
     fi
 
     # Make sure Microblaze Qemu is available for these BSPs
@@ -511,7 +511,7 @@ if [ ${rsb_updated} = "yes" -o ${rtems_updated} = "yes" ] ; then
     # Make sure or1k Qemu is available for these BSPs
     type qemu-system-or1k >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
-      test_single_bsp or1k generic_or1k
+      test ${version} -ge 7 && test_single_bsp or1k generic_or1k
     fi
 
     # Make sure x86_64 Qemu is available for these BSPs
