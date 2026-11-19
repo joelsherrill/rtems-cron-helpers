@@ -107,6 +107,12 @@ https://ftp.rtems.org/pub/rtems/releases/5/rc/5.4-rc1/
    nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner -v -g -f -V 6 -D  /home/joel/rtems-cron-6.2 >nohup-6.2.out </dev/null 2>&1 &
 
 ~~~~
+  rm -rf rtems-cron-6.3
+   ~/rtems-cron-helpers/rtems-cron-prepdir -D /home/joel/rtems-cron-6.3 -r -R https://ftp.rtems.org/pub/rtems/releases/6/6.3/ -t 6.3
+
+   nohup time sh -x ~/rtems-cron-helpers/rtems-cron-runner -v -g -f -V 6 -D  /home/joel/rtems-cron-6.3 >nohup-6.3.out </dev/null 2>&1 &
+
+~~~~
 
   rm -rf rtems-cron-7.0-rc1
    ~/rtems-cron-helpers/rtems-cron-prepdir -D /home/joel/rtems-cron-7.0-rc1 -r -R https://ftp.rtems.org/pub/rtems/releases/7/rc/7.0-rc1/ -t 7.0-rc1
